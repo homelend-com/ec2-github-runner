@@ -1,6 +1,6 @@
-name: On-demand self-hosted AWS EC2 runner for GitHub Actions (with no-default-labels support)
-description: Fork of machulav/ec2-github-runner with support for --no-default-labels flag.
-author: Nadav Shohat
+name: Homelend EC2 GitHub Runner
+description: On-demand self-hosted AWS EC2 runner for GitHub Actions with custom Homelend configurations
+author: Homelend
 version: 1.0.0
 branding:
   icon: 'box'

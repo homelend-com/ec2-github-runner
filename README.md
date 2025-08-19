@@ -1,10 +1,8 @@
-# On-demand self-hosted AWS EC2 runner for GitHub Actions
+# Homelend EC2 GitHub Runner
 
-⚠️ If you like the project, please consider [supporting Ukraine](https://prytulafoundation.org/en) in a [war](https://en.wikipedia.org/wiki/Russian_invasion_of_Ukraine) against russian occupants. Any help would be much appreciated!
+On-demand self-hosted AWS EC2 runner for GitHub Actions with custom Homelend configurations.
 
-[<img src="https://user-images.githubusercontent.com/2857712/156607570-8c9fd15b-8b44-41b3-bec3-312267af324f.png" width="500">](https://supportukrainenow.org)
-
-(image by [Nina Dzyvulska](https://www.behance.net/ninadz))
+This is a Homelend-maintained fork of [nadavshohat/ec2-github-runner](https://github.com/nadavshohat/ec2-github-runner), which itself is a fork of [machulav/ec2-github-runner](https://github.com/machulav/ec2-github-runner) with support for the `--no-default-labels` flag.
 
 ---
 
@@ -262,7 +260,7 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}
       - name: Start EC2 runner
         id: start-ec2-runner
-        uses: machulav/ec2-github-runner@v2
+        uses: homelend-com/ec2-github-runner@v2
         with:
           mode: start
           github-token: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
@@ -298,7 +296,7 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
       - name: Stop EC2 runner
-        uses: machulav/ec2-github-runner@v2
+        uses: homelend-com/ec2-github-runner@v2
         with:
           mode: stop
           github-token: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
