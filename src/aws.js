@@ -3,6 +3,11 @@ const { EC2Client, RunInstancesCommand, TerminateInstancesCommand, waitUntilInst
 const core = require('@actions/core');
 const config = require('./config');
 
+// GitHub enforces a minimum self-hosted runner version for registration; runners older
+// than that receive a 404 from POST /actions/runner-registration and never come online.
+// See https://github.blog/changelog/2026-02-05-github-actions-self-hosted-runner-minimum-version-enforcement-extended
+const RUNNER_VERSION = '2.337.0';
+
 // User data scripts are run as the root user
 function buildUserDataScript(githubRegistrationToken, label) {
   if (config.input.runnerHomeDir) {
@@ -24,8 +29,8 @@ function buildUserDataScript(githubRegistrationToken, label) {
       `echo "${config.input.preRunnerScript}" > pre-runner-script.sh`,
       'source pre-runner-script.sh',
       'case $(uname -m) in aarch64) ARCH="arm64" ;; amd64|x86_64) ARCH="x64" ;; esac && export RUNNER_ARCH=${ARCH}',
-      'curl -O -L https://github.com/actions/runner/releases/download/v2.313.0/actions-runner-linux-${RUNNER_ARCH}-2.313.0.tar.gz',
-      'tar xzf ./actions-runner-linux-${RUNNER_ARCH}-2.313.0.tar.gz',
+      `curl -O -L https://github.com/actions/runner/releases/download/v${RUNNER_VERSION}/actions-runner-linux-\${RUNNER_ARCH}-${RUNNER_VERSION}.tar.gz`,
+      `tar xzf ./actions-runner-linux-\${RUNNER_ARCH}-${RUNNER_VERSION}.tar.gz`,
       'export RUNNER_ALLOW_RUNASROOT=1',
       `./config.sh --url https://github.com/${config.githubContext.owner}/${config.githubContext.repo} --token ${githubRegistrationToken} --labels ${label} --no-default-labels`,
       './run.sh',
